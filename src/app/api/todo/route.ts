@@ -2,7 +2,7 @@ import { NewTodo, db, todos } from "@/lib/drizzle";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (request: NextRequest) => {
-  const allTodos = await db.select().from(todos);
+  const allTodos = await db.select().from(todos).orderBy(todos.id);
   console.log("all todos", allTodos);
   return NextResponse.json({
     message: "GET request successful",

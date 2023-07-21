@@ -8,10 +8,20 @@ export const PUT = async (
 ) => {
   const id = params.id;
   const body = await request.json();
+  const updatedValue: { taskname?: string; isDone?: boolean } = {};
+
+  if (body.taskname != null) {
+    updatedValue.taskname = body.taskname;
+  }
+
+  //   if (body.isdone) { //dont write like this because isdone can be false
+  if (body.isdone != null) {
+    updatedValue.isDone = body.isdone;
+  }
 
   const resp = await db
     .update(todos)
-    .set({ taskname: body.taskname })
+    .set(updatedValue)
     .where(eq(todos.id, id))
     .returning({ updated: todos.taskname });
 
